@@ -3,19 +3,19 @@ import tweepy, time, sys
 #	argfile = str(sys.argv[1]) # argumento com caminho do arquivo de texto
 
 # chaves para autenticação
-CONSUMER_KEY = "qxmcDRG923lXzlw4tysnAz5F9"
-CONSUMER_SECRET = "sezRCwGQXzsfhtVg94YjBOVC2256SYyasE4jEqAjKrrgy109Xf"
-ACCESS_KEY = "775135705098031105-mCwgEe0loDigwTTGI1TeZ4CAgaQHAHC"
-ACCESS_SECRET = "vlPDlnaTjCd2wlfnq8kSlVK8WbehbyulZNOCgeaj4ItZx"
+CONSUMER_KEY = consumerkey
+CONSUMER_SECRET = consumersecret
+ACCESS_KEY = accesskey
+ACCESS_SECRET = accesssecret
 
 auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
 api = tweepy.API(auth)
 #final da autenticação
 
-twt = api.search(q="#testandomalditobot")
+twt = api.search(q="#randomhashtag")
 
-t = ['#testandomalditobot']
+t = ['#randomhashtag']
 
 for s in twt:
     for i in t:
