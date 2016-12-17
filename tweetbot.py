@@ -1,40 +1,48 @@
-import tweepy, time, sys
+import tweepy
+import time
+import imgurbot
+users_id = []
 
-#	argfile = str(sys.argv[1]) # argumento com caminho do arquivo de texto
+class TwitterStreamListener(tweepy.StreamListener):
+	def on_status(self, status):
+		getuserInfo(status)
+		replyTweet(status)
 
-# chaves para autenticação
-CONSUMER_KEY = "qxmcDRG923lXzlw4tysnAz5F9"
-CONSUMER_SECRET = "sezRCwGQXzsfhtVg94YjBOVC2256SYyasE4jEqAjKrrgy109Xf"
-ACCESS_KEY = "775135705098031105-mCwgEe0loDigwTTGI1TeZ4CAgaQHAHC"
-ACCESS_SECRET = "vlPDlnaTjCd2wlfnq8kSlVK8WbehbyulZNOCgeaj4ItZx"
+	def on_error(self, status_code):
+		if status_code == 403:
+			print("Acesso Negado.")
+			return False
 
-auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
-auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
-api = tweepy.API(auth)
-#final da autenticação
+def getuserInfo(tweet):
+	if tweet.user.id not in users_id: # print user info if hes not on the array already
+		users_id.append(tweet.user.id)	
+		print("User ID \t:" + str(tweet.user.id))
+		print("User Name \t:" + tweet.user.name)
+		print("User Screen name \t:" + tweet.user.screen_name)
 
-twt = api.search(q="#testandomalditobot")
+def replyTweet(tweet):
+	usr = tweet.user.screen_name
+	name = tweet.user.name
+	tweetid = tweet.id
+	linkID = imgurbot.returnID()
+	api.update_status("@{0} Olá {1}, aqui está seu link: {2}".format(usr, name, linkID), # message to be displayed 
+	 in_reply_to_status_id = tweetid) # tweetid to reply to
 
-t = ['#testandomalditobot']
+if __name__ == '__main__':
 
-for s in twt:
-    for i in t:
-        if i == s.text:
-            sn = s.user.screen_name
-            m = "{0}, TESTE CONCLUIDO!".format(sn)
-            s = api.update_status(m, s.id)
-'''
+	# codes for the bot account
+	CONSUMER_KEY = "gUNwSzqm0RnUccPpfSb4cTkv7"
+	CONSUMER_SECRET = "NLmmyroMEVaZn1K7AS7ez74Z3jupvR4ZqnzCB9mzCAoy9zUYcJ"
+	ACCESS_KEY = "809555156786380805-ZCK1lavluFJi7GohaPuKjcenrxyQq1P"
+	ACCESS_SECRET = "nJro0YPeHlEENFWwFKTWqC6zu08Tg2GcnOFC0NyiitjA3"
 
-api.update_status(argfile)
-print("Status atualizado com sucesso!")
-quit()
+	auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+	auth.secure = True
+	auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
+	api = tweepy.API(auth, wait_on_rate_limit=True, wait_on_rate_limit_notify=True,
+		retry_count=10, retry_delay=5, retry_errors=5)
 
+	streamListener = TwitterStreamListener() # creates an instance of the class
+	myStream = tweepy.Stream(auth=api.auth, listener=streamListener)
 
-filename = open(argfile,'r')
-f = filename.readlines()
-filename.close()
- 
-for line in f:
-    api.update_status(line)
-    time.sleep(900) #Tweet every 15 minutes
-'''
+	myStream.filter(track=['#rndIMGur1'], async=True) # search for any tweet with the hashtag
