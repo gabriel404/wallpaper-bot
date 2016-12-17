@@ -31,10 +31,10 @@ def replyTweet(tweet):
 if __name__ == '__main__':
 
 	# codes for the bot account
-	CONSUMER_KEY = "gUNwSzqm0RnUccPpfSb4cTkv7"
-	CONSUMER_SECRET = "NLmmyroMEVaZn1K7AS7ez74Z3jupvR4ZqnzCB9mzCAoy9zUYcJ"
-	ACCESS_KEY = "809555156786380805-ZCK1lavluFJi7GohaPuKjcenrxyQq1P"
-	ACCESS_SECRET = "nJro0YPeHlEENFWwFKTWqC6zu08Tg2GcnOFC0NyiitjA3"
+	CONSUMER_KEY = ""
+	CONSUMER_SECRET = ""
+	ACCESS_KEY = ""
+	ACCESS_SECRET = ""
 
 	auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 	auth.secure = True
