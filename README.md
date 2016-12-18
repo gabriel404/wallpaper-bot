@@ -1,3 +1,9 @@
+<h1> REQUIREMENTS </h1>
+
+	pip install imgurpython
+	pip install tweepy
+	Python 3.5
+	
 <h1>CONFIGURATION</h1>
 <b>tweetbot.py</b>
 
