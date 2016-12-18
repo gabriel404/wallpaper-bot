@@ -26,7 +26,7 @@ def replyTweet(tweet):
 	name = tweet.user.name
 	tweetid = tweet.id
 	linkID = imgurbot.returnID() 
-	api.update_status("@{0} Olá {1}, aqui está seu link: {2}".format(usr, name, linkID), # message to be displayed 
+	api.update_status("@{0} Hi {1}, here's your link: {2}".format(usr, name, linkID), # message to be displayed 
 	 in_reply_to_status_id = tweetid) # tweetid to reply to
 
 if __name__ == '__main__':
