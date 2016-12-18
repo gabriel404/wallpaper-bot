@@ -1,7 +1,8 @@
 import tweepy
 import time
 import imgurbot
-users_id = []
+
+users_id = [] # array that stores the id of all users that have used this bot
 
 class TwitterStreamListener(tweepy.StreamListener):
 	def on_status(self, status):
@@ -10,7 +11,7 @@ class TwitterStreamListener(tweepy.StreamListener):
 
 	def on_error(self, status_code):
 		if status_code == 403:
-			print("Acesso Negado.")
+			print("Access Denied")
 			return False
 
 def getuserInfo(tweet):
@@ -24,7 +25,7 @@ def replyTweet(tweet):
 	usr = tweet.user.screen_name
 	name = tweet.user.name
 	tweetid = tweet.id
-	linkID = imgurbot.returnID()
+	linkID = imgurbot.returnID() 
 	api.update_status("@{0} Olá {1}, aqui está seu link: {2}".format(usr, name, linkID), # message to be displayed 
 	 in_reply_to_status_id = tweetid) # tweetid to reply to
 
@@ -36,6 +37,7 @@ if __name__ == '__main__':
 	ACCESS_KEY = ""
 	ACCESS_SECRET = ""
 
+	# autorization stuff
 	auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
 	auth.secure = True
 	auth.set_access_token(ACCESS_KEY, ACCESS_SECRET)
